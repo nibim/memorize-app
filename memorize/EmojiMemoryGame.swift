@@ -12,7 +12,12 @@ class EmojiMemoryGame { //it is a class because it is going to share everything 
     
     private static func createMemoryGame() ->  MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: 4) { pairIndex in
-            return emojis[pairIndex]
+            if emojis.indices.contains(pairIndex){
+                return emojis[pairIndex]
+            }
+            else {
+                return "⁇"
+            }
         }
     }
     
