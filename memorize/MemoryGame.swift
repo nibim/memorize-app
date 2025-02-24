@@ -8,7 +8,20 @@
 import Foundation
 
 struct MemoryGame<CardContent> {                //CardCount('dont care type') can be anything, can be image etc
-    var cards: Array<Card>
+    private(set) var cards: Array<Card>
+    
+    
+    init(numberOfPairsOfCards: Int, contentFactory: (Int) -> CardContent){
+        cards = []
+        //add numberOfPairsOfCards x 2
+        for pairIndex in 0..<numberOfPairsOfCards{
+            let content = contentFactory(pairIndex)
+            cards.append(Card(content: content))
+            cards.append(Card(content: content))
+        }
+        
+    }
+    
     
     func choose (card: Card){
         
