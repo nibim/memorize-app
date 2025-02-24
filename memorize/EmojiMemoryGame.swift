@@ -8,14 +8,18 @@
 import SwiftUI
 
 class EmojiMemoryGame { //it is a class because it is going to share everything with everyone
-    
-    private var model: MemoryGame<String>                   // full seperation because we only use this model as a private for this class 
+    private static let emojis = ["🥳", "👻", "🥺", "💀", "🤯","🫁","👾","🐭","🦥","🛟"]
+
+    private var model = MemoryGame(numberOfPairsOfCards: 4) { pairIndex in
+        return emojis[pairIndex]
+    }
         
+        // full seperation because we only use this model as a private for this class
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
     }
     
-    func choose(card: MemoryGame<String>.Card) {
+    func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card: card)
     }
     
