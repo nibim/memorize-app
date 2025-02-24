@@ -14,7 +14,7 @@ struct MemoryGame<CardContent> {                //CardCount('dont care type') ca
     init(numberOfPairsOfCards: Int, contentFactory: (Int) -> CardContent){
         cards = []
         //add numberOfPairsOfCards x 2
-        for pairIndex in 0..<numberOfPairsOfCards{
+        for pairIndex in 0..<max(numberOfPairsOfCards,2){
             let content = contentFactory(pairIndex)
             cards.append(Card(content: content))
             cards.append(Card(content: content))
