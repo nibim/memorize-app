@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class EmojiMemoryGame { //it is a class because it is going to share everything with everyone
+class EmojiMemoryGame:ObservableObject { //it is a class because it is going to share everything with everyone
     private static let emojis = ["🥳", "👻", "🥺", "💀", "🤯","🫁","👾","🐭","🦥","🛟"]
     
     private static func createMemoryGame() ->  MemoryGame<String> {
@@ -21,12 +21,18 @@ class EmojiMemoryGame { //it is a class because it is going to share everything 
         }
     }
     
-    private var model = createMemoryGame()
+    @Published private var model = createMemoryGame()
         
         // full seperation because we only use this model as a private for this class
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
     }
+    
+    // MARK: - Intents
+    func shuffel(){
+        model.shuffle()
+    }
+    
     
     func choose(_ card: MemoryGame<String>.Card) {
         model.choose(card: card)

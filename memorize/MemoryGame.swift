@@ -26,6 +26,12 @@ struct MemoryGame<CardContent> {                //CardCount('dont care type') ca
     func choose (card: Card){
         
     }
+    
+    mutating func shuffle(){
+      cards.shuffle()
+        print(cards)
+    }
+    
     struct Card{
         var isFaceUp: Bool = true
         var isMatched: Bool = false
