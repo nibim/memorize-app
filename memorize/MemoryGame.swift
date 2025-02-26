@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MemoryGame<CardContent> {                //CardCount('dont care type') can be anything, can be image etc
+struct MemoryGame<CardContent> where CardContent: Equatable {                //CardCount('dont care type') can be anything, can be image etc
     private(set) var cards: Array<Card>
     
     
@@ -16,8 +16,8 @@ struct MemoryGame<CardContent> {                //CardCount('dont care type') ca
         //add numberOfPairsOfCards x 2
         for pairIndex in 0..<max(numberOfPairsOfCards,2){
             let content = contentFactory(pairIndex)
-            cards.append(Card(content: content))
-            cards.append(Card(content: content))
+            cards.append(Card(content: content, id:"\(pairIndex+1)1a"))
+            cards.append(Card(content: content, id:"\(pairIndex+1)1b"))
         }
         
     }
@@ -32,9 +32,11 @@ struct MemoryGame<CardContent> {                //CardCount('dont care type') ca
         print(cards)
     }
     
-    struct Card{
+    struct Card: Equatable, Identifiable {
+        
         var isFaceUp: Bool = true
         var isMatched: Bool = false
         var content: CardContent
+        var id: String
     }
 }
