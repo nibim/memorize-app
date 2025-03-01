@@ -35,7 +35,7 @@ class EmojiMemoryGame:ObservableObject { //it is a class because it is going to 
     
     
     func choose(_ card: MemoryGame<String>.Card) {
-        model.choose(card: card)
+        model.choose(card)
     }
     
 }
