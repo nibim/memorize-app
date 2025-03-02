@@ -24,27 +24,11 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
     
     var indexOfTheOnlyFaceUpCard: Int? {
         get{
-            var faceUpCardsIndices = [Int]()
-            for index in cards.indices {
-                if cards[index].isFaceUp{
-                    faceUpCardsIndices.append(index)
-                }
-            }
-            if faceUpCardsIndices.count == 1{
-                return faceUpCardsIndices[0]
-            }else{
-                return nil
-            }
+            let faceUpCardsIndices = cards.indices.filter { index in cards[index].isFaceUp }
+            return faceUpCardsIndices.count == 1 ? faceUpCardsIndices.first : nil
         }
         set{
-            for index in cards.indices {
-                if index == newValue {
-                    cards[index].isMatched = true
-                }
-                else {
-                    cards[index].isMatched = false
-                }
-            }
+            cards.indices.forEach { cards[$0].isFaceUp = (newValue == $0)}
             
         }   
     }
