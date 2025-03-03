@@ -12,10 +12,9 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack{
-            ScrollView{
                 cards
                     .animation(.default, value: viewModel.cards)
-            }
+            
             Button("Shuffle"){
                 viewModel.shuffel()
             }
@@ -23,19 +22,32 @@ struct EmojiMemoryGameView: View {
         }
     }
     var cards : some View {                //cards is a computed property which reperesents SwiftUI view
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0){
-            ForEach(viewModel.cards) { card in
-                CardView(card)
-                    .aspectRatio(2/3, contentMode: .fit)
-                    .padding(4)
-                    .onTapGesture {
-                        viewModel.choose(card)
-                    }
+        GeometryReader{ geometry in
+            let gridItemSize = gridItemWidthThatFits(
+                count: viewModel.cards.count,
+                size: geometry.size,
+                atAspectRatio: 2/3
+            
+            )
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 85), spacing: 0)], spacing: 0){
+                ForEach(viewModel.cards) { card in
+                    CardView(card)
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .padding(4)
+                        .onTapGesture {
+                            viewModel.choose(card)
+                        }
+                }
             }
         }
         .foregroundColor(Color.orange)
-        .foregroundColor(Color.orange)
     }
+    func gridItemWidthThatFits(
+        count: Int,
+        size: CGSize,
+        atAspectRatio aspectRatio: CGFloat) -> CGFloat {
+            return 65
+        }
             
 }
     
