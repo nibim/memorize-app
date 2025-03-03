@@ -21,7 +21,7 @@ struct EmojiMemoryGameView: View {
             .padding()
         }
     }
-    var cards : some View {                //cards is a computed property which reperesents SwiftUI view
+    var cards : some View {  //cards is a computed property which reperesents SwiftUI view
         GeometryReader{ geometry in
             let gridItemSize = gridItemWidthThatFits(
                 count: viewModel.cards.count,
@@ -46,9 +46,20 @@ struct EmojiMemoryGameView: View {
         count: Int,
         size: CGSize,
         atAspectRatio aspectRatio: CGFloat) -> CGFloat {
-            return 65
+            let count = CGFloat(count)
+            var columnCount = 1.0
+            repeat {
+                let width = size.width / columnCount
+                let height = width / aspectRatio
+                
+                let rowCount = (count / columnCount).rounded(.up)
+                if rowCount * height < size.height {
+                    return (size.width / columnCount).rounded(.down)
+                }
+                columnCount += 1
+            } while columnCount < count
+            return min(size.width / count , size.height * aspectRatio).rounded(.down)
         }
-            
 }
     
     
