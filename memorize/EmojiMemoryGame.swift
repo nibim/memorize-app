@@ -29,7 +29,7 @@ class EmojiMemoryGame:ObservableObject { //it is a class because it is going to 
     }
     
     // MARK: - Intents
-    func shuffel(){
+    func shuffle(){
         model.shuffle()
     }
     
