@@ -23,47 +23,16 @@ struct EmojiMemoryGameView: View {
         .padding()
     }
     
-    @ViewBuilder
-    var cards : some View {  //cards is a computed property which reperesents SwiftUI view
-        GeometryReader { geometry in
-            let gridItemSize = gridItemWidthThatFits(
-                count: viewModel.cards.count,
-                size: geometry.size,
-                atAspectRatio: aspectRatio
-            
-            )
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0){
-                ForEach(viewModel.cards) { card in
-                    CardView(card)
-                        .aspectRatio(aspectRatio, contentMode: .fit)
-                        .padding(4)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
-                }
+    private var cards : some View {   //cards is a computed property which reperesents SwiftUI view
+        AspectVGrid(viewModel.cards ,aspectRatio: aspectRatio) { card in
+                CardView(card)
+                    .padding(4)
+                    .onTapGesture {
+                        viewModel.choose(card)
             }
         }
-        .foregroundColor(Color.orange)
+            .foregroundColor(Color.orange)
     }
-    func gridItemWidthThatFits(
-        count: Int,
-        size: CGSize,
-        atAspectRatio aspectRatio: CGFloat
-    ) -> CGFloat {
-            let count = CGFloat(count)
-            var columnCount = 1.0
-            repeat {
-                let width = size.width / columnCount
-                let height = width / aspectRatio
-                
-                let rowCount = (count / columnCount).rounded(.up)
-                if rowCount * height < size.height {
-                    return (size.width / columnCount).rounded(.down)
-                }
-                columnCount += 1
-            } while columnCount < count
-            return min(size.width / count , size.height * aspectRatio).rounded(.down)
-        }
 }
     
     
