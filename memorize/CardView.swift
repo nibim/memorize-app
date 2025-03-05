@@ -31,10 +31,15 @@ struct CardView: View {
             Group{
                 base.fill(.white)
                 base.strokeBorder(lineWidth: Constants.lineWidth)
-                Text(card.content)
-                    .font(.system(size: Constants.FontSize.large))
-                    .minimumScaleFactor(Constants.FontSize.scalefactor)
-                .aspectRatio(1, contentMode: .fit)
+                Circle()
+                    .opacity(0.4)
+                    .overlay(
+                        Text(card.content)
+                            .font(.system(size: Constants.FontSize.large))
+                            .minimumScaleFactor(Constants.FontSize.scalefactor)
+                            .aspectRatio(1, contentMode: .fit)
+                            .padding(5)
+                    )
             }
                 .opacity(card.isFaceUp ? 1 : 0)
             base.fill()
