@@ -25,7 +25,10 @@ class EmojiMemoryGame:ObservableObject { //it is a class because it is going to 
         
         // full seperation because we only use this model as a private for this class
     var cards: Array<MemoryGame<String>.Card> {
-        return model.cards
+        model.cards
+    }
+    var color: Color {
+        .orange
     }
     
     // MARK: - Intents
