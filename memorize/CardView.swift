@@ -14,15 +14,26 @@ struct CardView: View {
         self.card = card
     }
     
+    private struct Constants {
+        static let cornerRadius: CGFloat = 12
+        static let lineWidth: CGFloat = 2
+        static let inset: CGFloat = 4
+        struct FontSize {
+            static let small: CGFloat = 10
+            static let large: CGFloat = 200
+            static let scalefactor = small / large
+        }
+    }
+    
     var body: some View {
         ZStack {
-            let base = RoundedRectangle(cornerRadius: 12)
+            let base = RoundedRectangle(cornerRadius: Constants.cornerRadius)
             Group{
                 base.fill(.white)
-                base.strokeBorder(lineWidth: 2)
+                base.strokeBorder(lineWidth: Constants.lineWidth)
                 Text(card.content)
-                .font(.system(size: 200))
-                .minimumScaleFactor(0.01)
+                    .font(.system(size: Constants.FontSize.large))
+                    .minimumScaleFactor(Constants.FontSize.scalefactor)
                 .aspectRatio(1, contentMode: .fit)
             }
                 .opacity(card.isFaceUp ? 1 : 0)
