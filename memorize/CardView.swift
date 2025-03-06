@@ -23,6 +23,10 @@ struct CardView: View {
             static let large: CGFloat = 200
             static let scalefactor = small / large
         }
+        struct Pie{
+            static let opacity: CGFloat = 0.4
+            static let inset: CGFloat = 4
+        }
     }
     
     var body: some View {
@@ -32,13 +36,13 @@ struct CardView: View {
                 base.fill(.white)
                 base.strokeBorder(lineWidth: Constants.lineWidth)
                 Circle()
-                    .opacity(0.4)
+                    .opacity(Constants.Pie.opacity)
                     .overlay(
                         Text(card.content)
                             .font(.system(size: Constants.FontSize.large))
                             .minimumScaleFactor(Constants.FontSize.scalefactor)
                             .aspectRatio(1, contentMode: .fit)
-                            .padding(5)
+                            .padding(Constants.Pie.inset)
                     )
             }
                 .opacity(card.isFaceUp ? 1 : 0)
