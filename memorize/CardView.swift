@@ -35,7 +35,7 @@ struct CardView: View {
             Group{
                 base.fill(.white)
                 base.strokeBorder(lineWidth: Constants.lineWidth)
-                Circle()
+                Pie(endAngle: .degrees(90))
                     .opacity(Constants.Pie.opacity)
                     .overlay(
                         Text(card.content)
