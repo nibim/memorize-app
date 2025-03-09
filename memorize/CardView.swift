@@ -38,7 +38,13 @@ struct CardView: View {
                     .padding(Constants.Pie.inset)
             )
             .padding(Constants.inset)
-            .modifier(Cardify(isFaceUp: card.isFaceUp))
+            .cardify(isFaceUp: card.isFaceUp)  // we modify the previous view(Pie) by the modifier.
         .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+    }
+}
+
+extension View {
+    func cardify(isFaceUp: Bool) -> some View {
+        modifier(Cardify(isFaceUp: isFaceUp))
     }
 }
