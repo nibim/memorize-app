@@ -13,11 +13,11 @@ struct Cardify: ViewModifier {
         
         ZStack {
             let base = RoundedRectangle(cornerRadius: Constants.cornerRadius)
-            Group{
-                base.fill(.white)
-                base.strokeBorder(lineWidth: Constants.lineWidth)
-                    content
-            }
+            
+            base.strokeBorder(lineWidth: Constants.lineWidth)
+                .background(base.fill(Color.white))
+                .overlay(content)
+            
                 .opacity(isFaceUp ? 1 : 0)
             base.fill()
                 .opacity(isFaceUp ? 0 : 1 )
