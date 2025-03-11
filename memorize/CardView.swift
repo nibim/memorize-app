@@ -36,6 +36,9 @@ struct CardView: View {
                     .minimumScaleFactor(Constants.FontSize.scalefactor)
                     .aspectRatio(1, contentMode: .fit)
                     .padding(Constants.Pie.inset)
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value:card.isMatched)
+                   
             )
             .padding(Constants.inset)
             .cardify(isFaceUp: card.isFaceUp)  // we modify the previous view(Pie) by the modifier.
