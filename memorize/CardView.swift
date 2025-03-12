@@ -10,6 +10,7 @@ import SwiftUI
 struct CardView: View {
     let card: MemoryGame<String>.Card // it is here that will bridge view to model 🌉
     
+    
     init(_ card: MemoryGame<String>.Card) {
         self.card = card
     }
@@ -28,6 +29,8 @@ struct CardView: View {
     }
     
     var body: some View {
+        
+        
         Pie(endAngle: .degrees(90))
             .opacity(Constants.Pie.opacity)
             .overlay(
@@ -41,7 +44,9 @@ struct CardView: View {
                    
             )
             .padding(Constants.inset)
-            .cardify(isFaceUp: card.isFaceUp)  // we modify the previous view(Pie) by the modifier.
+            .cardify(isFaceUp: card.isFaceUp)// we modify the previous view(Pie) by  the modifier.
+            .animation(.easeInOut(duration: 0.5), value: card.isFaceUp)
+
         .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
     }
 }

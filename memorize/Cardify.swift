@@ -19,9 +19,12 @@ struct Cardify: ViewModifier {
                 .overlay(content)
             
                 .opacity(isFaceUp ? 1 : 0)
+                .rotation3DEffect(.degrees(isFaceUp ? 0 : 180), axis: (0,1,0))
             base.fill()
                 .opacity(isFaceUp ? 0 : 1 )
         }
+        .rotation3DEffect(.degrees(isFaceUp ? 0 : 180), axis:(0,1,0))
+       
     }
     private struct Constants {
         static let cornerRadius: CGFloat = 12
