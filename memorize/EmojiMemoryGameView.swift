@@ -33,6 +33,7 @@ struct EmojiMemoryGameView: View {
     }
     private var score: some View {
         Text("Scope: \(viewModel.score)")
+            .animation(nil)
     }
     
     private var cards : some View {   //cards is a computed property which reperesents SwiftUI view
