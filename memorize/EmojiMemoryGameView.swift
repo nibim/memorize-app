@@ -15,10 +15,13 @@ struct EmojiMemoryGameView: View {
         VStack{
                 cards
                 .foregroundColor(viewModel.color)
-            
-            Button("Shuffle"){
-                withAnimation(){
-                    viewModel.shuffle()
+            HStack{
+                Text("Scope: \(viewModel.score)")
+                Spacer()
+                Button("Shuffle"){
+                    withAnimation(){
+                        viewModel.shuffle()
+                    }
                 }
             }
         }

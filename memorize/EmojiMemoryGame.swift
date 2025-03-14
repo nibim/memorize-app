@@ -30,7 +30,9 @@ class EmojiMemoryGame:ObservableObject { //it is a class because it is going to 
     var color: Color {
         .orange
     }
-    
+    var score: Int {
+        return model.score
+    }
     // MARK: - Intents
     func shuffle(){
         model.shuffle()
