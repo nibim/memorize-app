@@ -16,16 +16,23 @@ struct EmojiMemoryGameView: View {
                 cards
                 .foregroundColor(viewModel.color)
             HStack{
-                Text("Scope: \(viewModel.score)")
+                score
                 Spacer()
-                Button("Shuffle"){
-                    withAnimation(){
-                        viewModel.shuffle()
-                    }
-                }
+                shuffel
             }
         }
         .padding()
+    }
+    
+    private var shuffel: some View {
+        Button("Shuffle"){
+            withAnimation(){
+                viewModel.shuffle()
+            }
+        }
+    }
+    private var score: some View {
+        Text("Scope: \(viewModel.score)")
     }
     
     private var cards : some View {   //cards is a computed property which reperesents SwiftUI view
