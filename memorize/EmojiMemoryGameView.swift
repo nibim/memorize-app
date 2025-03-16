@@ -43,12 +43,17 @@ struct EmojiMemoryGameView: View {
                     .padding(4)
                     .overlay(FlyingNumber(number: scoreChange(causedBY: card)))
                     .onTapGesture {
+                        let scoreBeeforeChoosing = viewModel.score
                         viewModel.choose(card)
+                        let scoreChange = viewModel.score - scoreBeeforeChoosing
+                        lastScoreChange = (scoreChange, causedByCardId: card.id)
             }
         }
     }
+    @State private var lastScoreChange = (0 , causedByCardId: "") //using tuple
     private func scoreChange(causedBY card: Card) -> Int {
-        return 0
+        let (amount,  id) = lastScoreChange //
+        return card.id == id ? amount : 0
     }
 }
 
