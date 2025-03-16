@@ -24,8 +24,11 @@ struct FlyingNumber: View {
                 .opacity(offset != 0 ? 0 : 1) //with the help of "withAnimation" we manage to faiding in and out naturally in the range of 0 to 1
                 .onAppear(){
                     withAnimation(.easeIn(duration: 0.7)){
-                        offset = number < 0 ? -100 : -200
-                    }
+                        offset = number < 0 ? 200 : -200
+                    }//
+                }
+                .onDisappear(){
+                    offset = 0
                 }
         }
     }

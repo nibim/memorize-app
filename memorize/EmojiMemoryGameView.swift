@@ -52,7 +52,7 @@ struct EmojiMemoryGameView: View {
     }
     @State private var lastScoreChange = (0 , causedByCardId: "") //using tuple
     private func scoreChange(causedBY card: Card) -> Int {
-        let (amount,  id) = lastScoreChange //
+        let (amount,  id) = lastScoreChange 
         return card.id == id ? amount : 0
     }
 }
