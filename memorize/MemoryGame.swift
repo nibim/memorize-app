@@ -40,6 +40,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
                         cards[chosenIndex].isMatched = true
                         cards[potentialIndexOfTheOnlyFaceUpCard].isMatched = true
                         score += 2
+                        debugPrint()
                     } else {
                         if cards[chosenIndex].hasBeenSeen {
                             score -= 1
@@ -64,7 +65,6 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
     
     mutating func shuffle(){
       cards.shuffle()
-        print(cards)
     }
     
     struct Card: Equatable, Identifiable {
@@ -77,8 +77,42 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
         }
         var isMatched: Bool = false
         var hasBeenSeen: Bool = false
-        var content: CardContent
+        let content: CardContent
         var id: String
+        
+        private mutating func startUsingBonusTime() {
+            if isFaceUp && !isMatched && bonusPercentRemaining > 0, lastFaceUpDate == nil {
+                lastFaceUpDate = Date()
+            }
+        }
+        
+        private mutating func stopUsingBonusTime() {
+            pastFaceUpTime = faceUpTime
+            lastFaceUpDate = nil
+        }
+        
+        var bonus: Int {
+            Int(bonusTimeLimit * bonusPercentRemaining)
+        }
+        
+        var bonusPercentRemaining: Double {
+            bonusTimeLimit > 0 ? max(0, bonusTimeLimit - faceUpTime)/bonusTimeLimit : 0
+        }
+        
+        var faceUpTime: TimeInterval {
+            if let lastFaceUpDate {
+                return pastFaceUpTime + Date().timeIntervalSince(lastFaceUpDate)
+            } else {
+                return pastFaceUpTime
+            }
+        }
+        
+        var bonusTimeLimit: TimeInterval = 6
+        var lastFaceUpDate: Date?
+        var pastFaceUpTime: TimeInterval = 0
+        func debugPrint() {
+            print("My name is Nimaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+        }
     }
 }
 
