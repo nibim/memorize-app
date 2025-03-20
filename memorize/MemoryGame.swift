@@ -14,13 +14,13 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
     init(numberOfPairsOfCards: Int, contentFactory: (Int) -> CardContent){
         cards = []
         //add numberOfPairsOfCards x 2
-        for pairIndex in 0..<max(numberOfPairsOfCards,2){
+        for pairIndex in 0..<max(numberOfPairsOfCards,12){
             let content = contentFactory(pairIndex)
             cards.append(Card(content: content, id:"\(pairIndex+1)1a"))
             cards.append(Card(content: content, id:"\(pairIndex+1)1b"))
         }
         
-    }
+    }//
     
     var indexOfTheOnlyFaceUpCard: Int? {
         get{

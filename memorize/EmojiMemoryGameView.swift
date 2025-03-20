@@ -42,12 +42,18 @@ struct EmojiMemoryGameView: View {
                 CardView(card)
                     .padding(4)
                     .overlay(FlyingNumber(number: scoreChange(causedBY: card)))
+                    .zIndex(scoreChange(causedBY: card) != 0 ? 1 : 0) //not working
                     .onTapGesture {
-                        let scoreBeeforeChoosing = viewModel.score
-                        viewModel.choose(card)
-                        let scoreChange = viewModel.score - scoreBeeforeChoosing
-                        lastScoreChange = (scoreChange, causedByCardId: card.id)
+                        choose(card)
             }
+        }
+    }
+    private func choose(_ card: Card){
+        withAnimation{
+            let scoreBeforeChoosing = viewModel.score
+            viewModel.choose(card)
+            let scoreChange = viewModel.score - scoreBeforeChoosing
+            lastScoreChange = (scoreChange, causedByCardId: card.id)
         }
     }
     @State private var lastScoreChange = (0 , causedByCardId: "") //using tuple
