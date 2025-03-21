@@ -29,16 +29,20 @@ struct CardView: View {
     }
     
     var body: some View {
-        TimelineView(.animation) { timeline in  //
-            Pie(endAngle: .degrees(card.bonusPercentRemaining * 360  ))
-                .opacity(Constants.Pie.opacity)
-                .overlay(cardContenAndText.padding(Constants.Pie.inset))
-                .padding(Constants.inset)
-                .cardify(isFaceUp: card.isFaceUp)// we modify the previous view(Pie) by  the modifier.
-                .animation(.easeInOut(duration: 0.5), value: card.isFaceUp)
-
-                .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+            TimelineView(.animation) { timeline in
+                if(card.isFaceUp || !card.isMatched){
+                Pie(endAngle: .degrees(card.bonusPercentRemaining * 360  ))
+                    .opacity(Constants.Pie.opacity)
+                    .overlay(cardContenAndText.padding(Constants.Pie.inset))
+                    .padding(Constants.inset)
+                    .cardify(isFaceUp: card.isFaceUp)// we modify the previous view(Pie) by  the modifier.
+                    .transition(.scale)
+                }
+                else{
+                    Color.clear
+                }
         }
+    
         
     }
     
