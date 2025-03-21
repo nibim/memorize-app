@@ -39,7 +39,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
                     if cards[chosenIndex].content == cards[potentialIndexOfTheOnlyFaceUpCard].content{
                         cards[chosenIndex].isMatched = true
                         cards[potentialIndexOfTheOnlyFaceUpCard].isMatched = true
-                        score += 2
+                        score += 2 + cards[chosenIndex].bonus + cards[potentialIndexOfTheOnlyFaceUpCard].bonus
                         debugPrint()
                     } else {
                         if cards[chosenIndex].hasBeenSeen {
@@ -70,12 +70,27 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
     struct Card: Equatable, Identifiable {
         var isFaceUp: Bool = false{
             didSet {
+                if isFaceUp {
+                    startUsingBonusTime()
+                }
+                else{
+                    stopUsingBonusTime()
+                }
                 if oldValue && !isFaceUp {
                     hasBeenSeen = true
                 }
             }
         }
-        var isMatched: Bool = false
+        var isMatched: Bool = false{
+            didSet{
+                if isMatched {
+                    stopUsingBonusTime()
+                }
+            }
+            
+        }
+        
+        
         var hasBeenSeen: Bool = false
         let content: CardContent
         var id: String
@@ -88,17 +103,20 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
         
         private mutating func stopUsingBonusTime() {
             pastFaceUpTime = faceUpTime
-            lastFaceUpDate = nil
+            lastFaceUpDate = nil               // we reset the exact timer.
         }
         
+        //one point for every second of the bonusTimeLimit that was not used.
         var bonus: Int {
             Int(bonusTimeLimit * bonusPercentRemaining)
+                //if 50% time is remaining meaning we have 3 pts
         }
         
         var bonusPercentRemaining: Double {
             bonusTimeLimit > 0 ? max(0, bonusTimeLimit - faceUpTime)/bonusTimeLimit : 0
         }
         
+        //the length that the card has been faced up and unmatached during its lifetime:  pastFaceUpTime + time since lastFaceUpDate
         var faceUpTime: TimeInterval {
             if let lastFaceUpDate {
                 return pastFaceUpTime + Date().timeIntervalSince(lastFaceUpDate)
@@ -107,12 +125,9 @@ struct MemoryGame<CardContent> where CardContent: Equatable {                //C
             }
         }
         
-        var bonusTimeLimit: TimeInterval = 6
-        var lastFaceUpDate: Date?
-        var pastFaceUpTime: TimeInterval = 0
-        func debugPrint() {
-            print("My name is Nimaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        }
+        var bonusTimeLimit: TimeInterval = 6 //zero means zero points
+        var lastFaceUpDate: Date? //The question mark (?) means the variable is optional, meaning it can hold either a Date value or nil (no value).
+        var pastFaceUpTime: TimeInterval = 0       //Imp: accumulated time this card was face up in the past
     }
 }
 
