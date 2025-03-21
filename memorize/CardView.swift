@@ -29,25 +29,26 @@ struct CardView: View {
     }
     
     var body: some View {
-        
-        
-        Pie(endAngle: .degrees(90))
-            .opacity(Constants.Pie.opacity)
-            .overlay(
-                Text(card.content)
-                    .font(.system(size: Constants.FontSize.large))
-                    .minimumScaleFactor(Constants.FontSize.scalefactor)
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding(Constants.Pie.inset)
-                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
-                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value:card.isMatched)
-                   
-            )
-            .padding(Constants.inset)
-            .cardify(isFaceUp: card.isFaceUp)// we modify the previous view(Pie) by  the modifier.
-            .animation(.easeInOut(duration: 0.5), value: card.isFaceUp)
+        TimelineView(.animation) { timeline in  //
+            Pie(endAngle: .degrees(card.bonusPercentRemaining * 360  ))
+                .opacity(Constants.Pie.opacity)
+                .overlay(
+                    Text(card.content)
+                        .font(.system(size: Constants.FontSize.large))
+                        .minimumScaleFactor(Constants.FontSize.scalefactor)
+                        .aspectRatio(1, contentMode: .fit)
+                        .padding(Constants.Pie.inset)
+                        .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                        .animation(.linear(duration: 1).repeatForever(autoreverses: false), value:card.isMatched)
+                       
+                )
+                .padding(Constants.inset)
+                .cardify(isFaceUp: card.isFaceUp)// we modify the previous view(Pie) by  the modifier.
+                .animation(.easeInOut(duration: 0.5), value: card.isFaceUp)
 
-        .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+                .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
+        }
+        
     }
 }
 
