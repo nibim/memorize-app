@@ -42,12 +42,21 @@ struct EmojiMemoryGameView: View {
                 CardView(card)
                     .padding(4)
                     .overlay(FlyingNumber(number: scoreChange(causedBY: card)))
-                    .zIndex(scoreChange(causedBY: card) != 0 ? 1 : 0) //not working
+                    .zIndex(scoreChange(causedBY: card) != 0 ? 100 : 0) //not working
                     .onTapGesture {
                         choose(card)
-            }
+                    }
         }
     }
+    @State private var dealt = Set<Card.ID>()
+    
+    private func isDealt (_ card: Card) -> Bool {
+        dealt.contains(card.id)
+    }
+    private var undealtCards: [Card] {
+        viewModel.cards.filter { !isDealt($0) }
+    }
+    
     private func choose(_ card: Card){
         withAnimation{
             let scoreBeforeChoosing = viewModel.score
@@ -57,6 +66,7 @@ struct EmojiMemoryGameView: View {
         }
     }
     @State private var lastScoreChange = (0 , causedByCardId: "") //using tuple
+    
     private func scoreChange(causedBY card: Card) -> Int {
         let (amount,  id) = lastScoreChange 
         return card.id == id ? amount : 0

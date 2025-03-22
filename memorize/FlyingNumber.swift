@@ -25,9 +25,9 @@ struct FlyingNumber: View {
                 .onAppear(){
                     withAnimation(.easeIn(duration: 2)){
                         offset = number < 0 ? 200 : -200
-                    }//
+                    }
                 }
-                .onDisappear(){
+                .onDisappear{
                     offset = 0
                 }
         }
