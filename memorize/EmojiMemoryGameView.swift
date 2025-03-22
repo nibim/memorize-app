@@ -47,6 +47,10 @@ struct EmojiMemoryGameView: View {
                 .onTapGesture {
                     choose(card)
                 }
+                .transition(.offset(
+                    x: CGFloat.random(in: -1000...1000),
+                    y: CGFloat.random(in: -1000...1000)
+                ))
             }
         }
         .onAppear{
