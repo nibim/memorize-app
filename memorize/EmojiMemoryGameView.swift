@@ -39,13 +39,22 @@ struct EmojiMemoryGameView: View {
     
     private var cards : some View {   //cards is a computed property which reperesents SwiftUI view
         AspectVGrid(viewModel.cards ,aspectRatio: aspectRatio) { card in
+            if isDealt(card) {
                 CardView(card)
-                    .padding(4)
-                    .overlay(FlyingNumber(number: scoreChange(causedBY: card)))
-                    .zIndex(scoreChange(causedBY: card) != 0 ? 100 : 0) //not working
-                    .onTapGesture {
-                        choose(card)
-                    }
+                .padding(4)
+                .overlay(FlyingNumber(number: scoreChange(causedBY: card)))
+                .zIndex(scoreChange(causedBY: card) != 0 ? 100 : 0) //not working
+                .onTapGesture {
+                    choose(card)
+                }
+            }
+        }
+        .onAppear{
+            withAnimation(.easeInOut(duration: 2)){
+                for card in viewModel.cards {
+                    dealt.insert(card.id)
+                }
+            }
         }
     }
     @State private var dealt = Set<Card.ID>()
